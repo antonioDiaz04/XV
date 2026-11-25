@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis XV años | Suzeth Alejandra</title>
+  <meta name="theme-color" content="#cbb8dd">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Mis XV años">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="1.jpeg">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lila: {
+              fondo: '#cbb8dd',
+              pagina: '#e6dcf0',
+              oscuro: '#b39ccb'
+            },
+            dorado: '#d9c08a',
+          },
+          fontFamily: {
+            script: ['"Great Vibes"', 'cursive'],
+            elegante: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background:
+        radial-gradient(ellipse at 12% 18%, rgb(230 220 240 / 48%), transparent 34%),
+        radial-gradient(ellipse at 88% 32%, rgb(179 156 203 / 34%), transparent 38%),
+        radial-gradient(ellipse at 24% 82%, rgb(203 184 221 / 38%), transparent 40%),
+        radial-gradient(ellipse at 82% 88%, rgb(128 107 152 / 28%), transparent 38%),
+        linear-gradient(135deg, #a88fbe, #d2c0e0 48%, #927ca9);
+      background-attachment: fixed;
+    }
+
+    @keyframes flower-bloom {
+      from {
+        opacity: 0;
+        scale: .06;
+        filter: blur(4px);
+      }
+      to {
+        opacity: 1;
+        scale: 1;
+        filter: blur(0);
+      }
+    }
+
+    @keyframes flower-settle {
+      from {
+        left: var(--heart-x);
+        top: var(--heart-y);
+      }
+      to {
+        left: var(--final-x);
+        top: var(--final-y);
+      }
+    }
+
+    @keyframes photo-reveal {
+      from {
+        opacity: 0;
+        scale: .94;
+        filter: blur(3px);
+      }
+      to {
+        opacity: 1;
+        scale: 1;
+        filter: blur(0);
+      }
+    }
+
+    @keyframes title-appear {
+      0% {
+        opacity: 0;
+        scale: .94;
+        filter: blur(4px);
+      }
+      20%, 72% {
+        opacity: 1;
+        scale: 1;
+        filter: blur(0);
+      }
+      100% {
+        opacity: 0;
+        scale: 1.02;
+        filter: blur(2px);
+      }
+    }
+
+    .opening-title {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 30;
+      width: max-content;
+      max-width: calc(100vw - 3rem);
+      translate: -50% -50%;
+      color: #fffdf8;
+      text-align: center;
+      white-space: nowrap;
+      text-shadow: 0 0 8px #fff, 0 0 22px rgb(255 246 216 / 75%);
+      animation: title-appear 3500ms ease-in-out 700ms both;
+    }
+
+    .invitation-card {
+      animation: photo-reveal 900ms 4350ms cubic-bezier(.2, .75, .25, 1) both;
+    }
+
+    .invitation-details {
+      animation: photo-reveal 900ms 5300ms cubic-bezier(.2, .75, .25, 1) both;
+    }
+
+    .flower-flight {
+      position: absolute;
+      left: var(--heart-x);
+      top: var(--heart-y);
+      translate: -50% -50%;
+      animation: flower-settle 1600ms var(--move-delay) cubic-bezier(.45, 0, .55, 1) both;
+    }
+
+    .flower-art {
+      display: block;
+      animation: flower-bloom 850ms 100ms cubic-bezier(.2, .75, .25, 1) both;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 9999px;
+      background: #fff9e8;
+      box-shadow: 0 0 8px 3px rgb(255 249 232 / 65%);
+      animation: sparkle-glow 2200ms ease-in-out infinite alternate;
+    }
+
+    @keyframes sparkle-glow {
+      from {
+        opacity: .35;
+        scale: .7;
+      }
+      to {
+        opacity: .9;
+        scale: 1.15;
+      }
+    }
+
+    @keyframes letter-glow {
+      from {
+        text-shadow: 0 0 2px rgb(255 255 255 / 15%);
+      }
+      to {
+        text-shadow: 0 0 8px rgb(255 255 255 / 65%);
+      }
+    }
+
+    .luminous-text :is(p, h1, h2, button) {
+      animation: letter-glow 2200ms ease-in-out infinite alternate;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .invitation-card,
+      .invitation-details,
+      .flower-flight,
+      .flower-art,
+      .sparkle,
+      .opening-title,
+      .luminous-text > * {
+        animation: none;
+      }
+
+      .flower-flight {
+        left: var(--final-x);
+        top: var(--final-y);
+      }
+
+      .opening-title {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen overflow-x-hidden p-4 sm:p-6 font-elegante">
+
+  <main class="mx-auto flex w-full max-w-5xl flex-col items-center">
+    <section aria-label="Fotografía de la quinceañera" class="flex min-h-[82svh] w-full items-center justify-center py-10 sm:min-h-[90svh]">
+      <div class="relative inline-block">
+
+        <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+          <div class="flower-flight w-[31%]" style="--heart-x:39%;--heart-y:38%;--final-x:7%;--final-y:8%;--move-delay:1800ms">
+            <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+          </div>
+
+          <div class="flower-flight w-[31%]" style="--heart-x:61%;--heart-y:38%;--final-x:93%;--final-y:8%;--move-delay:1920ms">
+            <img src="descarga__2_-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
+          </div>
+
+          <div class="flower-flight w-[23%]" style="--heart-x:29%;--heart-y:50%;--final-x:2%;--final-y:42%;--move-delay:2040ms">
+            <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-45 drop-shadow-lg" alt="">
+          </div>
+
+          <div class="flower-flight w-[23%]" style="--heart-x:71%;--heart-y:50%;--final-x:98%;--final-y:45%;--move-delay:2160ms">
+            <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+          </div>
+
+          <div class="flower-flight w-[28%]" style="--heart-x:39%;--heart-y:62%;--final-x:18%;--final-y:94%;--move-delay:2280ms">
+            <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+          </div>
+
+          <div class="flower-flight w-[28%]" style="--heart-x:61%;--heart-y:62%;--final-x:82%;--final-y:94%;--move-delay:2400ms">
+            <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
+          </div>
+
+          <div class="flower-flight w-[20%]" style="--heart-x:50%;--heart-y:72%;--final-x:50%;--final-y:108%;--move-delay:2520ms">
+            <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-180 drop-shadow-lg" alt="">
+          </div>
+
+          <span class="sparkle left-[25%] top-[20%]"></span>
+          <span class="sparkle right-[24%] top-[38%] [animation-delay:500ms]"></span>
+          <span class="sparkle left-[38%] bottom-[17%] [animation-delay:900ms]"></span>
+          <span class="sparkle right-[12%] bottom-[30%] [animation-delay:1200ms]"></span>
+        </div>
+
+        <p class="opening-title font-script text-5xl sm:text-6xl" aria-hidden="true">
+          Mis XV años
+        </p>
+
+        <div class="invitation-card relative z-10 isolate overflow-hidden shadow-2xl
+                    w-[min(480px,calc(100vw-2rem))] aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0
+                    [border-radius:50%_50%_0_0/30%_30%_0_0]">
+          <img src="1.jpeg" alt="Fotografía de la quinceañera" class="absolute inset-0 h-full w-full object-cover object-[center_40%]">
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="invitation-title" class="invitation-details luminous-text w-full max-w-2xl px-4 pb-16 pt-6 text-center text-[#554363] sm:pt-10">
+      <p class="mb-2 text-sm uppercase tracking-[.35em] text-[#816b92]">
+        Te invitamos a celebrar
+      </p>
+
+      <h1 id="invitation-title" class="font-script text-6xl leading-tight sm:text-7xl">
+        Mis XV años
+      </h1>
+
+      <p class="mb-8 text-3xl tracking-[.12em] sm:text-4xl">
+        Suzeth Alejandra
+      </p>
+
+      <p class="mb-2 text-sm uppercase tracking-[.25em] text-[#816b92]">
+        Domingo
+      </p>
+
+      <p class="mb-8 text-2xl uppercase tracking-[.12em] sm:text-3xl">
+        27 de diciembre de 2026
+      </p>
+
+      <p class="mb-3 text-sm uppercase tracking-[.3em] text-[#816b92]">
+        Mis papás
+      </p>
+
+      <p class="text-lg leading-relaxed sm:text-xl">
+        Amairany Gpe. Morales Nochebuena<br>
+        Alejandro Nochebuena Medécigo
+      </p>
+
+      <button id="install-app" type="button" hidden class="mt-10 rounded-full border border-[#816b92] px-7 py-3 text-sm uppercase tracking-[.18em] text-[#554363] transition hover:bg-[#816b92] hover:text-white">
+        Instalar invitación
+      </button>
+
+      <p id="install-help" hidden class="mx-auto mt-5 max-w-sm text-sm leading-relaxed text-[#816b92]">
+        En el menú del navegador, elige «Instalar aplicación» o «Añadir a pantalla de inicio».
+      </p>
+    </section>
+
+    <section aria-labelledby="pass-title" class="luminous-text w-full max-w-2xl px-4 pb-20 text-center text-[#554363]">
+      <p class="mx-auto mb-6 h-px w-20 bg-[#b39ccb]"></p>
+
+      <h2 id="pass-title" class="mb-3 text-sm font-semibold uppercase tracking-[.35em] text-[#816b92]">
+        Pase personal
+      </h2>
+
+      <p class="text-lg tracking-[.12em]">
+        Válido para ___ personas
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const installButton = document.querySelector('#install-app');
+    const installHelp = document.querySelector('#install-help');
+    let installPrompt;
+
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent)
+      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    const isStandalone = navigator.standalone === true
+      || window.matchMedia('(display-mode: standalone)').matches;
+
+    installButton.hidden = isStandalone || isIos;
+
+    if (isIos && !isStandalone) {
+      installHelp.textContent = 'Para instalar en iPhone: abre esta página en Safari, toca Compartir y elige «Añadir a pantalla de inicio».';
+      installHelp.hidden = false;
+    } else {
+      installHelp.hidden = isStandalone;
+    }
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      installPrompt = event;
+      installButton.hidden = false;
+      installHelp.hidden = true;
+    });
+
+    installButton.addEventListener('click', async () => {
+      if (!installPrompt) {
+        installHelp.hidden = false;
+        return;
+      }
+
+      await installPrompt.prompt();
+
+      const { outcome } = await installPrompt.userChoice;
+      installPrompt = null;
+
+      if (outcome === 'accepted') {
+        installButton.hidden = true;
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installButton.hidden = true;
+      installHelp.hidden = true;
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch((error) => {
+          console.error('No se pudo registrar el service worker:', error);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
