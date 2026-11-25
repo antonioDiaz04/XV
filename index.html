@@ -157,11 +157,10 @@
 
           <p class="opening-title font-script text-5xl sm:text-6xl" aria-hidden="true">Mis XV años</p>
 
-          <!-- Foto estática con forma inicial de corazón -->
+          <!-- Contenedor de la foto -->
           <div class="invitation-card relative z-10 isolate mx-auto overflow-hidden shadow-2xl w-[min(320px,calc(100vw-2rem))] sm:w-[min(360px,calc(100vw-2rem))] lg:w-full aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0" 
                id="hero-photo" 
-               style="opacity: 0; transform: scale(0.8); 
-               clip-path: path('M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z');">
+               style="opacity: 0; transform: scale(0.8); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>'); mask-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>'); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;">
             <img src="1.jpeg" alt="Fotografía de la quinceañera" class="absolute inset-0 h-full w-full object-cover object-[center_40%]">
           </div>
         </div>
@@ -331,10 +330,6 @@
     let targetProgress = 0;  
     const smoothFactor = 0.05; // Ajusta qué tan suave/lento es el efecto
 
-    // Formas para la transición
-    const heartShape = "path('M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z')";
-    const fullFrame = "inset(0% 0% 0% 0% round 50% 50% 0 0 / 30% 30% 0 0)";
-
     function animate() {
       const scrollY = window.scrollY || window.pageYOffset;
       const viewportH = window.innerHeight;
@@ -366,7 +361,7 @@
         flower.style.opacity = 1 - (flowerProgress * 0.3);
       });
 
-      // FASE 2: La foto aparece y cambia de forma (50 al 100% del progreso)
+      // FASE 2: La foto aparece y la máscara se expande (50 al 100% del progreso)
       if (heroPhoto) {
         let photoProgress = Math.max(0, (currentProgress - 0.5) / 0.5);
         photoProgress = 1 - Math.pow(1 - photoProgress, 3); 
@@ -377,11 +372,23 @@
         // Escala: de 0.8 a 1 (zoom suave)
         heroPhoto.style.transform = `scale(${0.8 + (0.2 * photoProgress)})`;
 
-        // Cambio de forma: Corazón a Marco
+        // LA MAGIA: Expandimos la máscara del corazón usando el tamaño de la máscara.
+        // Al inicio es 100% 100% (ocupa todo, pero el SVG del corazón tiene su forma).
+        // Hacemos un 'zoom' de la máscara para que el corazón se haga más grande y salga de la pantalla.
+        const maskScale = 1 + (photoProgress * 3); // Llega a 4x, cubriendo todo el rectángulo
+        heroPhoto.style.webkitMaskSize = `${maskScale * 100}% ${maskScale * 100}%`;
+        heroPhoto.style.maskSize = `${maskScale * 100}% ${maskScale * 100}%`;
+
+        // Cuando termina, le quitamos la máscara para que se vea el marco original (redondeado superior)
         if (photoProgress > 0.95) {
-           heroPhoto.style.clipPath = fullFrame;
+            heroPhoto.style.webkitMaskImage = 'none';
+            heroPhoto.style.maskImage = 'none';
+            heroPhoto.style.borderRadius = '50% 50% 0 0 / 30% 30% 0 0'; // Tu marco original
         } else {
-           heroPhoto.style.clipPath = heartShape;
+            // Restauramos la máscara del corazón (por si acaso subimos el scroll)
+            heroPhoto.style.webkitMaskImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>')";
+            heroPhoto.style.maskImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>')";
+            heroPhoto.style.borderRadius = '0'; // Quitamos el redondeo para que el corazón sea limpio
         }
       }
 
