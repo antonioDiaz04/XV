@@ -197,8 +197,9 @@
 
 <body class="min-h-screen overflow-x-hidden p-4 sm:p-6 font-elegante">
 
-  <main class="mx-auto flex w-full max-w-5xl flex-col items-center">
-    <section aria-label="Fotografía de la quinceañera" class="flex min-h-[82svh] w-full items-center justify-center py-10 sm:min-h-[90svh]">
+  <main class="mx-auto flex w-full max-w-6xl flex-col items-center">
+    <div class="flex w-full flex-col items-center lg:min-h-[90svh] lg:flex-row lg:gap-8">
+    <section aria-label="Fotografía de la quinceañera" class="flex min-h-[82svh] w-full items-center justify-center py-10 sm:min-h-[90svh] lg:min-h-0 lg:flex-1">
       <div class="relative inline-block">
 
         <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
@@ -241,14 +242,14 @@
         </p>
 
         <div class="invitation-card relative z-10 isolate overflow-hidden shadow-2xl
-                    w-[min(480px,calc(100vw-2rem))] aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0
+                    w-[min(480px,calc(100vw-2rem))] aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0 lg:w-[min(42vw,480px)]
                     [border-radius:50%_50%_0_0/30%_30%_0_0]">
           <img src="1.jpeg" alt="Fotografía de la quinceañera" class="absolute inset-0 h-full w-full object-cover object-[center_40%]">
         </div>
       </div>
     </section>
 
-    <section aria-labelledby="invitation-title" class="invitation-details luminous-text w-full max-w-2xl px-4 pb-16 pt-6 text-center text-[#554363] sm:pt-10">
+    <section aria-labelledby="invitation-title" class="invitation-details luminous-text w-full max-w-2xl px-4 pb-16 pt-6 text-center text-[#554363] sm:pt-10 lg:max-w-none lg:flex-1">
       <p class="mb-2 text-sm uppercase tracking-[.35em] text-[#816b92]">
         Te invitamos a celebrar
       </p>
@@ -286,6 +287,7 @@
         En el menú del navegador, elige «Instalar aplicación» o «Añadir a pantalla de inicio».
       </p>
     </section>
+    </div>
 
     <section aria-labelledby="pass-title" class="luminous-text w-full max-w-2xl px-4 pb-20 text-center text-[#554363]">
       <p class="mx-auto mb-6 h-px w-20 bg-[#b39ccb]"></p>
