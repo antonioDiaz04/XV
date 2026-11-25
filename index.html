@@ -1,16 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis XV años | Suzeth Alejandra</title>
-  <meta name="theme-color" content="#cbb8dd">
+  <title>Mis XV años | Zuceth Alejandra</title>
+  <meta name="theme-color" content="#f8c8dc">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Mis XV años">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="1.jpeg">
+
+  <!-- AOS CSS (CDN) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -18,12 +20,18 @@
       theme: {
         extend: {
           colors: {
-            lila: {
-              fondo: '#cbb8dd',
-              pagina: '#e6dcf0',
-              oscuro: '#b39ccb'
+            rosa: {
+              fondo: '#fdf2f6',
+              pagina: '#ffffff',
+              oscuro: '#f8c8dc',
+              fuerte: '#e75480',
+              suave: '#fbd3e0'
             },
-            dorado: '#d9c08a',
+            texto: {
+              principal: '#1a1a1a',
+              secundario: '#4a4a4a'
+            },
+            dorado: '#e75480',
           },
           fontFamily: {
             script: ['"Great Vibes"', 'cursive'],
@@ -37,281 +45,377 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      background:
-        radial-gradient(ellipse at 12% 18%, rgb(230 220 240 / 48%), transparent 34%),
-        radial-gradient(ellipse at 88% 32%, rgb(179 156 203 / 34%), transparent 38%),
-        radial-gradient(ellipse at 24% 82%, rgb(203 184 221 / 38%), transparent 40%),
-        radial-gradient(ellipse at 82% 88%, rgb(128 107 152 / 28%), transparent 38%),
-        linear-gradient(135deg, #a88fbe, #d2c0e0 48%, #927ca9);
-      background-attachment: fixed;
-    }
+    html { scroll-behavior: smooth; }
+    body { background: #ffffff; }
 
-    @keyframes flower-bloom {
-      from {
-        opacity: 0;
-        scale: .06;
-        filter: blur(4px);
-      }
-      to {
-        opacity: 1;
-        scale: 1;
-        filter: blur(0);
-      }
-    }
+    /* ===== PARALLAX (SOLO TEXTOS) ===== */
+    .parallax-text { will-change: transform, opacity, filter; transition: transform 120ms linear, opacity 120ms linear, filter 120ms linear; }
 
-    @keyframes flower-settle {
-      from {
-        left: var(--heart-x);
-        top: var(--heart-y);
-      }
-      to {
-        left: var(--final-x);
-        top: var(--final-y);
-      }
-    }
+    /* ===== ANIMACIONES FLORES ===== */
+    @keyframes flower-bloom { from { opacity: 0; scale: .06; filter: blur(4px); } to { opacity: 1; scale: 1; filter: blur(0); } }
+    
+    .flower-flight { position: absolute; translate: -50% -50%; will-change: transform, opacity; }
+    .flower-art { display: block; animation: flower-bloom 850ms 100ms cubic-bezier(.2,.75,.25,1) both; }
 
-    @keyframes photo-reveal {
-      from {
-        opacity: 0;
-        scale: .94;
-        filter: blur(3px);
-      }
-      to {
-        opacity: 1;
-        scale: 1;
-        filter: blur(0);
-      }
-    }
-
-    @keyframes title-appear {
-      0% {
-        opacity: 0;
-        scale: .94;
-        filter: blur(4px);
-      }
-      20%, 72% {
-        opacity: 1;
-        scale: 1;
-        filter: blur(0);
-      }
-      100% {
-        opacity: 0;
-        scale: 1.02;
-        filter: blur(2px);
-      }
-    }
+    @keyframes title-appear { 0% { opacity: 0; scale: .94; filter: blur(4px); } 20%, 72% { opacity: 1; scale: 1; filter: blur(0); } 100% { opacity: 0; scale: 1.02; filter: blur(2px); } }
 
     .opening-title {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      z-index: 30;
-      width: max-content;
-      max-width: calc(100vw - 3rem);
-      translate: -50% -50%;
-      color: #fffdf8;
-      text-align: center;
-      white-space: nowrap;
-      text-shadow: 0 0 8px #fff, 0 0 22px rgb(255 246 216 / 75%);
+      position: absolute; left: 50%; top: 50%; z-index: 30; width: max-content; max-width: calc(100vw - 3rem);
+      translate: -50% -50%; color: #ffffff; text-align: center; white-space: nowrap;
+      text-shadow: 0 0 8px #fff, 0 0 22px rgb(231 84 128 / 75%);
       animation: title-appear 3500ms ease-in-out 700ms both;
     }
+    
+    .invitation-card { will-change: transform, opacity; }
+    
+    .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 9999px; background: #f8c8dc; box-shadow: 0 0 8px 3px rgb(231 84 128 / 65%); animation: sparkle-glow 2200ms ease-in-out infinite alternate; }
+    @keyframes sparkle-glow { from { opacity: .35; scale: .7; } to { opacity: .9; scale: 1.15; } }
+    
+    /* Brillo sutil para el texto negro */
+    @keyframes letter-glow-dark { from { text-shadow: 0 0 2px rgba(0,0,0,0.05); } to { text-shadow: 0 0 8px rgba(0,0,0,0.15); } }
+    .luminous-text-dark :is(p) { animation: letter-glow-dark 2200ms ease-in-out infinite alternate; }
 
-    .invitation-card {
-      animation: photo-reveal 900ms 4350ms cubic-bezier(.2, .75, .25, 1) both;
-    }
+    /* Brillo para títulos rosas */
+    @keyframes letter-glow { from { text-shadow: 0 0 2px rgb(231 84 128 / 15%); } to { text-shadow: 0 0 8px rgb(231 84 128 / 65%); } }
+    .luminous-text-rosa :is(h1, h2, .titulo-rosa) { animation: letter-glow 2200ms ease-in-out infinite alternate; }
 
-    .invitation-details {
-      animation: photo-reveal 900ms 5300ms cubic-bezier(.2, .75, .25, 1) both;
-    }
+    /* ===== DIVISORES FLORALES ===== */
+    .flower-divider { display: flex; align-items: center; justify-content: center; gap: 1.25rem; width: 100%; padding: 2rem 1rem; }
+    .flower-divider::before, .flower-divider::after { content: ""; flex: 1; height: 1px; max-width: 220px; background: linear-gradient(to right, transparent, #f8c8dc, transparent); }
+    .flower-divider img { width: 56px; height: 56px; object-fit: contain; filter: drop-shadow(0 0 6px rgb(231 84 128 / 35%)); animation: divider-sway 4s ease-in-out infinite alternate; }
+    .flower-divider img:nth-child(2) { width: 36px; height: 36px; animation-delay: 600ms; }
+    .flower-divider img:nth-child(4) { width: 36px; height: 36px; animation-delay: 1200ms; }
+    @keyframes divider-sway { from { rotate: -6deg; scale: .95; } to { rotate: 6deg; scale: 1.05; } }
 
-    .flower-flight {
-      position: absolute;
-      left: var(--heart-x);
-      top: var(--heart-y);
-      translate: -50% -50%;
-      animation: flower-settle 1600ms var(--move-delay) cubic-bezier(.45, 0, .55, 1) both;
-    }
-
-    .flower-art {
-      display: block;
-      animation: flower-bloom 850ms 100ms cubic-bezier(.2, .75, .25, 1) both;
-    }
-
-    .sparkle {
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      border-radius: 9999px;
-      background: #fff9e8;
-      box-shadow: 0 0 8px 3px rgb(255 249 232 / 65%);
-      animation: sparkle-glow 2200ms ease-in-out infinite alternate;
-    }
-
-    @keyframes sparkle-glow {
-      from {
-        opacity: .35;
-        scale: .7;
-      }
-      to {
-        opacity: .9;
-        scale: 1.15;
-      }
-    }
-
-    @keyframes letter-glow {
-      from {
-        text-shadow: 0 0 2px rgb(255 255 255 / 15%);
-      }
-      to {
-        text-shadow: 0 0 8px rgb(255 255 255 / 65%);
-      }
-    }
-
-    .luminous-text :is(p, h1, h2, button) {
-      animation: letter-glow 2200ms ease-in-out infinite alternate;
-    }
+    /* ===== BRILLOS AL CLICK ===== */
+    .click-sparkle { position: fixed; pointer-events: none; z-index: 9999; width: 10px; height: 10px; translate: -50% -50%; border-radius: 9999px; background: radial-gradient(circle, #fff 0%, #ffd6e5 40%, #e75480 100%); box-shadow: 0 0 6px 2px rgb(255 255 255 / 90%), 0 0 14px 6px rgb(231 84 128 / 70%), 0 0 26px 10px rgb(248 200 220 / 50%); animation: click-sparkle-burst 900ms cubic-bezier(.2,.75,.25,1) forwards; }
+    @keyframes click-sparkle-burst { 0% { opacity: 1; scale: .3; filter: blur(0); } 40% { opacity: 1; scale: 1.4; } 100% { opacity: 0; scale: 2.4; filter: blur(6px); } }
+    .click-sparkle::before, .click-sparkle::after { content: ""; position: absolute; left: 50%; top: 50%; width: 2px; height: 26px; translate: -50% -50%; background: linear-gradient(#fff, #e75480, transparent); border-radius: 9999px; box-shadow: 0 0 6px 2px rgb(231 84 128 / 60%); animation: click-sparkle-ray 900ms cubic-bezier(.2,.75,.25,1) forwards; }
+    .click-sparkle::after { rotate: 90deg; }
+    @keyframes click-sparkle-ray { 0% { opacity: 0; scale: .2; } 40% { opacity: 1; scale: 1; } 100% { opacity: 0; scale: 1.6; } }
+    .click-sparkle-dot { position: fixed; pointer-events: none; z-index: 9999; width: 6px; height: 6px; translate: -50% -50%; border-radius: 9999px; background: #fff; box-shadow: 0 0 8px 3px rgb(231 84 128 / 75%); animation: click-sparkle-fly 800ms ease-out forwards; }
+    @keyframes click-sparkle-fly { 0% { opacity: 1; scale: 1; translate: -50% -50%; } 100% { opacity: 0; scale: .2; translate: calc(-50% + var(--dx)) calc(-50% + var(--dy)); } }
 
     @media (prefers-reduced-motion: reduce) {
-      .invitation-card,
-      .invitation-details,
-      .flower-flight,
-      .flower-art,
-      .sparkle,
-      .opening-title,
-      .luminous-text > * {
-        animation: none;
-      }
-
-      .flower-flight {
-        left: var(--final-x);
-        top: var(--final-y);
-      }
-
-      .opening-title {
-        display: none;
-      }
+      html { scroll-behavior: auto; }
+      .flower-flight, .flower-art, .sparkle, .opening-title, .luminous-text-dark > *, .luminous-text-rosa > *, .click-sparkle, .click-sparkle::before, .click-sparkle::after, .click-sparkle-dot, .flower-divider img { animation: none; }
+      .opening-title { display: none; }
+      .click-sparkle, .click-sparkle-dot { display: none; }
+      .parallax-text, .invitation-card, .flower-flight { transition: none; transform: none !important; opacity: 1 !important; filter: none !important; }
     }
   </style>
 </head>
 
-<body class="min-h-screen overflow-x-hidden p-4 sm:p-6 font-elegante">
+<body class="min-h-screen overflow-x-hidden font-elegante bg-white">
 
-  <main class="mx-auto flex w-full max-w-6xl flex-col items-center">
-    <div class="flex w-full flex-col items-center lg:min-h-[90svh] lg:flex-row lg:gap-8">
-    <section aria-label="Fotografía de la quinceañera" class="flex min-h-[82svh] w-full items-center justify-center py-10 sm:min-h-[90svh] lg:min-h-0 lg:flex-1">
-      <div class="relative inline-block">
+  <main class="mx-auto flex w-full max-w-5xl flex-col items-center px-6 sm:px-8 lg:px-12 xl:px-16">
 
-        <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
-          <div class="flower-flight w-[31%]" style="--heart-x:39%;--heart-y:38%;--final-x:7%;--final-y:8%;--move-delay:1800ms">
-            <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+    <div class="flex w-full flex-col items-center lg:flex-row lg:items-start lg:gap-12 xl:gap-20 lg:py-12">
+
+      <!-- FOTO (CON EFECTO DE APERTURA SUAVE) -->
+      <section aria-label="Fotografía de la quinceañera" class="w-full py-10 lg:sticky lg:top-16 lg:w-[40%] lg:self-start lg:py-16">
+        <div class="relative inline-block w-full">
+          
+          <!-- Capa de flores (Controladas por JS) -->
+          <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true" id="flowers-container">
+            <div class="flower-flight w-[31%]" data-heart-x="50%" data-heart-y="50%" data-final-x="7%" data-final-y="8%">
+              <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+            </div>
+            <div class="flower-flight w-[31%]" data-heart-x="50%" data-heart-y="50%" data-final-x="93%" data-final-y="8%">
+              <img src="descarga__2_-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
+            </div>
+            <div class="flower-flight w-[23%]" data-heart-x="50%" data-heart-y="50%" data-final-x="2%" data-final-y="42%">
+              <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-45 drop-shadow-lg" alt="">
+            </div>
+            <div class="flower-flight w-[23%]" data-heart-x="50%" data-heart-y="50%" data-final-x="98%" data-final-y="45%">
+              <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+            </div>
+            <div class="flower-flight w-[28%]" data-heart-x="50%" data-heart-y="50%" data-final-x="18%" data-final-y="94%">
+              <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+            </div>
+            <div class="flower-flight w-[28%]" data-heart-x="50%" data-heart-y="50%" data-final-x="82%" data-final-y="94%">
+              <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
+            </div>
+            <div class="flower-flight w-[20%]" data-heart-x="50%" data-heart-y="50%" data-final-x="50%" data-final-y="108%">
+              <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-180 drop-shadow-lg" alt="">
+            </div>
+
+            <span class="sparkle left-[25%] top-[20%]"></span>
+            <span class="sparkle right-[24%] top-[38%] [animation-delay:500ms]"></span>
+            <span class="sparkle left-[38%] bottom-[17%] [animation-delay:900ms]"></span>
+            <span class="sparkle right-[12%] bottom-[30%] [animation-delay:1200ms]"></span>
           </div>
 
-          <div class="flower-flight w-[31%]" style="--heart-x:61%;--heart-y:38%;--final-x:93%;--final-y:8%;--move-delay:1920ms">
-            <img src="descarga__2_-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
-          </div>
+          <p class="opening-title font-script text-5xl sm:text-6xl" aria-hidden="true">Mis XV años</p>
 
-          <div class="flower-flight w-[23%]" style="--heart-x:29%;--heart-y:50%;--final-x:2%;--final-y:42%;--move-delay:2040ms">
-            <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-45 drop-shadow-lg" alt="">
+          <!-- Foto estática -->
+          <div class="invitation-card relative z-10 isolate mx-auto overflow-hidden shadow-2xl w-[min(320px,calc(100vw-2rem))] sm:w-[min(360px,calc(100vw-2rem))] lg:w-full aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0 [border-radius:50%_50%_0_0/30%_30%_0_0]" 
+               id="hero-photo" style="opacity: 0; transform: scale(0.8);">
+            <img src="1.jpeg" alt="Fotografía de la quinceañera" class="absolute inset-0 h-full w-full object-cover object-[center_40%]">
           </div>
+        </div>
+      </section>
 
-          <div class="flower-flight w-[23%]" style="--heart-x:71%;--heart-y:50%;--final-x:98%;--final-y:45%;--move-delay:2160ms">
-            <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
-          </div>
+      <!-- INFO CON SCROLL POR SECCIONES -->
+      <div class="w-full lg:w-[60%] lg:py-16 flex flex-col items-center">
 
-          <div class="flower-flight w-[28%]" style="--heart-x:39%;--heart-y:62%;--final-x:18%;--final-y:94%;--move-delay:2280ms">
-            <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
-          </div>
+        <!-- SECCIÓN 1: TÍTULO -->
+        <section id="seccion-titulo" class="flex min-h-0 md:min-h-[75svh] w-full flex-col items-center justify-center px-4 py-12 md:py-16 text-center">
+          <p class="parallax-text mb-4 text-xs uppercase tracking-[.4em] text-texto-secundario sm:text-sm" data-speed="0.04" data-fade="0.8">
+            Te invitamos a celebrar
+          </p>
+          <h1 class="parallax-text font-script text-5xl leading-none text-rosa-fuerte sm:text-6xl lg:text-7xl luminous-text-rosa" data-speed="0.08" data-fade="1" data-aos="zoom-in" data-aos-duration="1100" data-aos-delay="150">
+            Mis XV años
+          </h1>
+          <p class="parallax-text mt-6 text-2xl tracking-[.14em] text-rosa-fuerte sm:text-3xl lg:text-4xl" data-speed="0.06" data-fade="0.9">
+            Zuceth Alejandra
+          </p>
+          <p class="parallax-text mt-2 text-lg tracking-[.18em] text-texto-principal sm:text-xl lg:text-2xl" data-speed="0.05" data-fade="0.9">
+            Nochebuena Morales
+          </p>
+        </section>
 
-          <div class="flower-flight w-[28%]" style="--heart-x:61%;--heart-y:62%;--final-x:82%;--final-y:94%;--move-delay:2400ms">
-            <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
-          </div>
-
-          <div class="flower-flight w-[20%]" style="--heart-x:50%;--heart-y:72%;--final-x:50%;--final-y:108%;--move-delay:2520ms">
-            <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-180 drop-shadow-lg" alt="">
-          </div>
-
-          <span class="sparkle left-[25%] top-[20%]"></span>
-          <span class="sparkle right-[24%] top-[38%] [animation-delay:500ms]"></span>
-          <span class="sparkle left-[38%] bottom-[17%] [animation-delay:900ms]"></span>
-          <span class="sparkle right-[12%] bottom-[30%] [animation-delay:1200ms]"></span>
+        <!-- DIVISOR FLORAL -->
+        <div class="flower-divider" aria-hidden="true" data-aos="fade-in" data-aos-duration="800">
+          <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" alt="">
+          <img src="descarga__4_-removebg-preview.png" alt="">
+          <img src="descarga__2_-removebg-preview.png" alt="">
+          <img src="descarga__5_-removebg-preview.png" alt="">
         </div>
 
-        <p class="opening-title font-script text-5xl sm:text-6xl" aria-hidden="true">
-          Mis XV años
-        </p>
+        <!-- SECCIÓN 2: MENSAJE -->
+        <section id="seccion-mensaje" class="flex min-h-0 md:min-h-[75svh] w-full flex-col items-center justify-center px-4 py-12 md:py-16 text-center">
+          <p class="parallax-text mx-auto max-w-lg text-lg leading-relaxed text-texto-principal sm:text-xl lg:text-2xl luminous-text-dark" data-speed="0.07" data-fade="1">
+            Con la bendición de Dios y el amor de mis padres, quiero compartir contigo la alegría de celebrar esta etapa tan especial de mi vida.
+          </p>
+        </section>
 
-        <div class="invitation-card relative z-10 isolate overflow-hidden shadow-2xl
-                    w-[min(480px,calc(100vw-2rem))] aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0 lg:w-[min(42vw,480px)]
-                    [border-radius:50%_50%_0_0/30%_30%_0_0]">
-          <img src="1.jpeg" alt="Fotografía de la quinceañera" class="absolute inset-0 h-full w-full object-cover object-[center_40%]">
+        <!-- DIVISOR FLORAL -->
+        <div class="flower-divider" aria-hidden="true" data-aos="fade-in" data-aos-duration="800">
+          <img src="descarga__2_-removebg-preview.png" alt="">
+          <img src="descarga__5_-removebg-preview.png" alt="">
+          <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" alt="">
+          <img src="descarga__4_-removebg-preview.png" alt="">
         </div>
+
+        <!-- SECCIÓN 3: PADRES -->
+        <section id="seccion-papas" class="flex min-h-0 md:min-h-[75svh] w-full flex-col items-center justify-center px-4 py-12 md:py-16 text-center">
+          <p class="parallax-text mb-5 text-lg uppercase tracking-[.2em] text-rosa-fuerte sm:text-xl lg:text-2xl luminous-text-rosa" data-speed="0.04" data-fade="0.8">
+            Mis padres
+          </p>
+          <p class="parallax-text text-xl leading-loose text-texto-principal sm:text-2xl lg:text-3xl" data-speed="0.08" data-fade="1">
+            Alejandro Nochebuena Medécigo<br>
+            Amairany Gpe. Morales Nochebuena
+          </p>
+        </section>
+
+        <!-- DIVISOR FLORAL -->
+        <div class="flower-divider" aria-hidden="true" data-aos="fade-in" data-aos-duration="800">
+          <img src="descarga__4_-removebg-preview.png" alt="">
+          <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" alt="">
+          <img src="descarga__5_-removebg-preview.png" alt="">
+          <img src="descarga__2_-removebg-preview.png" alt="">
+        </div>
+
+        <!-- SECCIÓN 4: FECHA Y LUGARES -->
+        <section id="seccion-fecha" class="flex min-h-0 md:min-h-[85svh] w-full flex-col items-center justify-center px-4 py-12 md:py-16 text-center">
+          <p class="parallax-text text-2xl uppercase tracking-[.1em] text-rosa-fuerte sm:text-3xl lg:text-4xl luminous-text-rosa" data-speed="0.08" data-fade="1">
+            27 de diciembre<br>de 2026
+          </p>
+
+          <div class="mt-10 md:mt-12 grid w-full max-w-md gap-8 sm:grid-cols-2 mx-auto">
+            <!-- Ceremonia -->
+            <div class="parallax-text flex flex-col items-center" data-speed="0.06" data-fade="0.95">
+              <p class="mb-2 text-base font-semibold uppercase tracking-[.2em] text-rosa-fuerte sm:text-lg">
+                Ceremonia
+              </p>
+              <p class="text-base font-medium text-texto-principal sm:text-lg">
+                5:00 p. m.
+              </p>
+              <p class="mt-2 text-sm leading-relaxed text-texto-secundario sm:text-base">
+                Iglesia de Tres Cruces
+              </p>
+            </div>
+
+            <!-- Recepción -->
+            <div class="parallax-text flex flex-col items-center" data-speed="0.06" data-fade="0.95">
+              <p class="mb-2 text-base font-semibold uppercase tracking-[.2em] text-rosa-fuerte sm:text-lg">
+                Recepción
+              </p>
+              <p class="text-base font-medium text-texto-principal sm:text-lg">
+                7:00 p. m.
+              </p>
+              <p class="mt-2 text-sm leading-relaxed text-texto-secundario sm:text-base">
+                Salón Don Beto<br>
+                Huejutla de Reyes, Hidalgo
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- DIVISOR FLORAL -->
+        <div class="flower-divider" aria-hidden="true" data-aos="fade-in" data-aos-duration="800">
+          <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" alt="">
+          <img src="descarga__2_-removebg-preview.png" alt="">
+          <img src="descarga__4_-removebg-preview.png" alt="">
+          <img src="descarga__5_-removebg-preview.png" alt="">
+        </div>
+
+        <!-- SECCIÓN 5: MENSAJE FINAL + PASE -->
+        <section id="seccion-final" class="flex min-h-0 md:min-h-[85svh] w-full flex-col items-center justify-center px-4 py-12 md:py-16 text-center">
+          <p class="parallax-text mx-auto mb-8 md:mb-10 max-w-md text-lg italic leading-relaxed text-texto-principal sm:text-xl lg:text-2xl luminous-text-dark" data-speed="0.08" data-fade="1">
+            ¡Será un placer contar con tu presencia!
+          </p>
+
+          <p class="parallax-text mb-6 md:mb-8 h-px w-20 bg-rosa-oscuro" data-speed="0.04" data-fade="0.8"></p>
+
+          <p class="parallax-text mb-3 md:mb-4 text-lg font-semibold uppercase tracking-[.3em] text-rosa-fuerte sm:text-xl lg:text-2xl luminous-text-rosa" data-speed="0.04" data-fade="0.85">
+            Pase personal
+          </p>
+          <p class="parallax-text text-xl tracking-[.14em] text-texto-principal sm:text-2xl lg:text-3xl" data-speed="0.06" data-fade="0.95">
+            ___ persona
+          </p>
+
+          <div class="mt-10 md:mt-12 parallax-text max-w-xs" data-speed="0.05" data-fade="0.9">
+            <p class="text-xs font-semibold uppercase tracking-[.25em] text-rosa-fuerte sm:text-sm mb-2">
+              Evento exclusivo para adultos
+            </p>
+            <p class="text-sm leading-relaxed text-texto-secundario sm:text-base">
+              Agradecemos tu comprensión.
+            </p>
+          </div>
+
+          <button id="install-app" type="button" hidden class="mt-10 md:mt-12 rounded-full border-2 border-rosa-fuerte px-8 py-3 text-xs uppercase tracking-[.2em] text-rosa-fuerte transition hover:bg-rosa-fuerte hover:text-white sm:text-sm">
+            Instalar invitación
+          </button>
+
+          <p id="install-help" hidden class="mx-auto mt-6 max-w-xs text-sm leading-relaxed text-texto-secundario sm:text-base">
+            En el menú del navegador, elige «Instalar aplicación» o «Añadir a pantalla de inicio».
+          </p>
+        </section>
       </div>
-    </section>
-
-    <section aria-labelledby="invitation-title" class="invitation-details luminous-text w-full max-w-2xl px-4 pb-16 pt-6 text-center text-[#554363] sm:pt-10 lg:max-w-none lg:flex-1">
-      <p class="mb-2 text-sm uppercase tracking-[.35em] text-[#816b92]">
-        Te invitamos a celebrar
-      </p>
-
-      <h1 id="invitation-title" class="font-script text-6xl leading-tight sm:text-7xl">
-        Mis XV años
-      </h1>
-
-      <p class="mb-8 text-3xl tracking-[.12em] sm:text-4xl">
-        Suzeth Alejandra
-      </p>
-
-      <p class="mb-2 text-sm uppercase tracking-[.25em] text-[#816b92]">
-        Domingo
-      </p>
-
-      <p class="mb-8 text-2xl uppercase tracking-[.12em] sm:text-3xl">
-        27 de diciembre de 2026
-      </p>
-
-      <p class="mb-3 text-sm uppercase tracking-[.3em] text-[#816b92]">
-        Mis papás
-      </p>
-
-      <p class="text-lg leading-relaxed sm:text-xl">
-        Amairany Gpe. Morales Nochebuena<br>
-        Alejandro Nochebuena Medécigo
-      </p>
-
-      <button id="install-app" type="button" hidden class="mt-10 rounded-full border border-[#816b92] px-7 py-3 text-sm uppercase tracking-[.18em] text-[#554363] transition hover:bg-[#816b92] hover:text-white">
-        Instalar invitación
-      </button>
-
-      <p id="install-help" hidden class="mx-auto mt-5 max-w-sm text-sm leading-relaxed text-[#816b92]">
-        En el menú del navegador, elige «Instalar aplicación» o «Añadir a pantalla de inicio».
-      </p>
-    </section>
     </div>
-
-    <section aria-labelledby="pass-title" class="luminous-text w-full max-w-2xl px-4 pb-20 text-center text-[#554363]">
-      <p class="mx-auto mb-6 h-px w-20 bg-[#b39ccb]"></p>
-
-      <h2 id="pass-title" class="mb-3 text-sm font-semibold uppercase tracking-[.35em] text-[#816b92]">
-        Pase personal
-      </h2>
-
-      <p class="text-lg tracking-[.12em]">
-        Válido para ___ personas
-      </p>
-    </section>
   </main>
 
+  <!-- AOS JS (CDN) -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
   <script>
+    /* ===== INICIALIZAR AOS ===== */
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100,
+      disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    });
+
+    /* ===== REFERENCIAS Y VARIABLES DE ESTADO ===== */
+    const parallaxTexts = document.querySelectorAll('.parallax-text');
+    const flowerFlights = document.querySelectorAll('.flower-flight');
+    const heroPhoto = document.querySelector('#hero-photo');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    let ticking = false;
+    
+    // Variables para el suavizado (Lerp)
+    let currentProgress = 0; // El progreso visual actual
+    let targetProgress = 0;  // El progreso que dicta el scroll
+    
+    // El factor de suavizado: mientras más bajo, más lento y suave se mueve.
+    // 0.05 es muy lento y suave (tarda en alcanzar el objetivo).
+    // 0.1 es un poco más rápido.
+    const smoothFactor = 0.05; 
+
+    function animate() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const viewportH = window.innerHeight;
+      const isDesktop = window.innerWidth >= 1024;
+
+      /* --- 1. EFECTO DE APERTURA SECUENCIAL SUAVE (FLORES Y FOTO) --- */
+      
+      // Calculamos el objetivo basado en el scroll. 
+      // Requiere bajar 1.5 pantallas para completar la animación.
+      targetProgress = Math.min(scrollY / (viewportH * 1.5), 1);
+
+      // Aplicamos el suavizado (Lerp): currentProgress se acerca poco a poco a targetProgress
+      currentProgress += (targetProgress - currentProgress) * smoothFactor;
+
+      // FASE 1: Las flores se abren (del 0% al 50% del progreso)
+      let flowerProgress = Math.min(currentProgress / 0.5, 1);
+      flowerProgress = 1 - Math.pow(1 - flowerProgress, 3); // Curva suave
+
+      flowerFlights.forEach((flower) => {
+        const startX = flower.dataset.heartX || '50%';
+        const startY = flower.dataset.heartY || '50%';
+        const endX = flower.dataset.finalX || '50%';
+        const endY = flower.dataset.finalY || '50%';
+
+        const currentX = `calc(${startX} + (${endX} - ${startX}) * ${flowerProgress})`;
+        const currentY = `calc(${startY} + (${endY} - ${startY}) * ${flowerProgress})`;
+
+        flower.style.left = currentX;
+        flower.style.top = currentY;
+        flower.style.opacity = 1 - (flowerProgress * 0.3);
+      });
+
+      // FASE 2: La foto aparece (del 50% al 100% del progreso)
+      if (heroPhoto) {
+        let photoProgress = Math.max(0, (currentProgress - 0.5) / 0.5);
+        photoProgress = 1 - Math.pow(1 - photoProgress, 3); // Curva suave
+
+        heroPhoto.style.opacity = photoProgress;
+        heroPhoto.style.transform = `scale(${0.8 + (0.2 * photoProgress)})`;
+      }
+
+      /* --- 2. EFECTO PARALLAX / DESVANECIMIENTO DE TEXTOS --- */
+      parallaxTexts.forEach((el) => {
+        if (!isDesktop) {
+          el.style.transform = 'none';
+          el.style.opacity = '1';
+          el.style.filter = 'none';
+          return;
+        }
+
+        const rect = el.getBoundingClientRect();
+        const centerY = rect.top + rect.height / 2;
+        const distanceFromCenter = Math.abs(centerY - viewportH / 2);
+        
+        const maxDistance = viewportH * 0.65; 
+        let progress = Math.min(distanceFromCenter / maxDistance, 1);
+        progress = Math.pow(progress, 1.2);
+
+        const fadeStrength = parseFloat(el.dataset.fade || '1');
+        const minOpacity = 0.05 + (1 - fadeStrength) * 0.25;
+        const opacity = 1 - progress * (1 - minOpacity);
+
+        const speed = parseFloat(el.dataset.speed || '0.05');
+        const offset = (scrollY - (el.offsetTop - viewportH / 2)) * speed * 0.15;
+
+        const blur = progress * 4 * fadeStrength;
+
+        el.style.transform = `translate3d(0, ${offset}px, 0)`;
+        el.style.opacity = opacity.toFixed(3);
+        el.style.filter = `blur(${blur.toFixed(2)}px)`;
+      });
+
+      // Volvemos a llamar a animate en el siguiente frame
+      ticking = false;
+      requestAnimationFrame(animate);
+    }
+
+    if (!reduceMotion) {
+      // Iniciamos el bucle de animación continua
+      requestAnimationFrame(animate);
+    }
+
+    /* ===== INSTALACIÓN PWA ===== */
     const installButton = document.querySelector('#install-app');
     const installHelp = document.querySelector('#install-help');
     let installPrompt;
 
-    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent)
-      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-    const isStandalone = navigator.standalone === true
-      || window.matchMedia('(display-mode: standalone)').matches;
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isStandalone = navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
 
     installButton.hidden = isStandalone || isIos;
 
@@ -330,19 +434,11 @@
     });
 
     installButton.addEventListener('click', async () => {
-      if (!installPrompt) {
-        installHelp.hidden = false;
-        return;
-      }
-
+      if (!installPrompt) { installHelp.hidden = false; return; }
       await installPrompt.prompt();
-
       const { outcome } = await installPrompt.userChoice;
       installPrompt = null;
-
-      if (outcome === 'accepted') {
-        installButton.hidden = true;
-      }
+      if (outcome === 'accepted') installButton.hidden = true;
     });
 
     window.addEventListener('appinstalled', () => {
@@ -357,6 +453,40 @@
         });
       });
     }
+
+    /* ===== BRILLOS AL CLICK ===== */
+    function createSparkleBurst(x, y) {
+      if (reduceMotion) return;
+
+      const star = document.createElement('span');
+      star.className = 'click-sparkle';
+      star.style.left = x + 'px';
+      star.style.top = y + 'px';
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 950);
+
+      const count = 10;
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'click-sparkle-dot';
+        dot.style.left = x + 'px';
+        dot.style.top = y + 'px';
+
+        const angle = (Math.PI * 2 * i) / count + Math.random() * 0.3;
+        const distance = 28 + Math.random() * 38;
+        dot.style.setProperty('--dx', Math.cos(angle) * distance + 'px');
+        dot.style.setProperty('--dy', Math.sin(angle) * distance + 'px');
+        dot.style.animationDelay = (Math.random() * 120) + 'ms';
+
+        document.body.appendChild(dot);
+        setTimeout(() => dot.remove(), 1000);
+      }
+    }
+
+    document.addEventListener('pointerdown', (event) => {
+      if (event.target.closest('#install-app')) return;
+      createSparkleBurst(event.clientX, event.clientY);
+    });
   </script>
 </body>
 </html>
