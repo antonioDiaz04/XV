@@ -122,52 +122,56 @@
     <div class="flex w-full flex-col items-center lg:flex-row lg:items-start lg:gap-12 xl:gap-20 lg:py-12">
 
       <!-- FOTO (CON EFECTO DE CORAZÓN A MARCO) -->
-      <section aria-label="Fotografía de la quinceañera" class="w-full py-10 lg:sticky lg:top-16 lg:w-[40%] lg:self-start lg:py-16">
-        <div class="relative inline-block w-full">
-          
-          <!-- Capa de flores (Controladas por JS) -->
-          <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true" id="flowers-container">
-            <div class="flower-flight w-[31%]" data-heart-x="50%" data-heart-y="50%" data-final-x="7%" data-final-y="8%">
-              <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
-            </div>
-            <div class="flower-flight w-[31%]" data-heart-x="50%" data-heart-y="50%" data-final-x="93%" data-final-y="8%">
-              <img src="descarga__2_-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
-            </div>
-            <div class="flower-flight w-[23%]" data-heart-x="50%" data-heart-y="50%" data-final-x="2%" data-final-y="42%">
-              <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-45 drop-shadow-lg" alt="">
-            </div>
-            <div class="flower-flight w-[23%]" data-heart-x="50%" data-heart-y="50%" data-final-x="98%" data-final-y="45%">
-              <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
-            </div>
-            <div class="flower-flight w-[28%]" data-heart-x="50%" data-heart-y="50%" data-final-x="18%" data-final-y="94%">
-              <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
-            </div>
-            <div class="flower-flight w-[28%]" data-heart-x="50%" data-heart-y="50%" data-final-x="82%" data-final-y="94%">
-              <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
-            </div>
-            <div class="flower-flight w-[20%]" data-heart-x="50%" data-heart-y="50%" data-final-x="50%" data-final-y="108%">
-              <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-180 drop-shadow-lg" alt="">
+      <!-- En móvil usamos sticky para que se quede fija mientras se abre -->
+      <!-- Le damos un height extra en móvil para que dé tiempo a que la animación termine -->
+      <section aria-label="Fotografía de la quinceañera" class="w-full py-10 lg:sticky lg:top-16 lg:w-[40%] lg:self-start lg:py-16 relative z-30">
+        <div id="hero-sticky-wrapper" class="relative w-full lg:sticky lg:top-16">
+          <div class="relative inline-block w-full">
+            
+            <!-- Capa de flores (Controladas por JS) -->
+            <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true" id="flowers-container">
+              <div class="flower-flight w-[31%]" data-heart-x="50%" data-heart-y="50%" data-final-x="7%" data-final-y="8%">
+                <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+              </div>
+              <div class="flower-flight w-[31%]" data-heart-x="50%" data-heart-y="50%" data-final-x="93%" data-final-y="8%">
+                <img src="descarga__2_-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
+              </div>
+              <div class="flower-flight w-[23%]" data-heart-x="50%" data-heart-y="50%" data-final-x="2%" data-final-y="42%">
+                <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-45 drop-shadow-lg" alt="">
+              </div>
+              <div class="flower-flight w-[23%]" data-heart-x="50%" data-heart-y="50%" data-final-x="98%" data-final-y="45%">
+                <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+              </div>
+              <div class="flower-flight w-[28%]" data-heart-x="50%" data-heart-y="50%" data-final-x="18%" data-final-y="94%">
+                <img src="descarga__5_-removebg-preview.png" class="flower-art w-full -rotate-12 drop-shadow-lg" alt="">
+              </div>
+              <div class="flower-flight w-[28%]" data-heart-x="50%" data-heart-y="50%" data-final-x="82%" data-final-y="94%">
+                <img src="Botánica_y_Elementos_Florales_____-removebg-preview.png" class="flower-art w-full rotate-12 drop-shadow-lg" alt="">
+              </div>
+              <div class="flower-flight w-[20%]" data-heart-x="50%" data-heart-y="50%" data-final-x="50%" data-final-y="108%">
+                <img src="descarga__4_-removebg-preview.png" class="flower-art w-full rotate-180 drop-shadow-lg" alt="">
+              </div>
+
+              <span class="sparkle left-[25%] top-[20%]"></span>
+              <span class="sparkle right-[24%] top-[38%] [animation-delay:500ms]"></span>
+              <span class="sparkle left-[38%] bottom-[17%] [animation-delay:900ms]"></span>
+              <span class="sparkle right-[12%] bottom-[30%] [animation-delay:1200ms]"></span>
             </div>
 
-            <span class="sparkle left-[25%] top-[20%]"></span>
-            <span class="sparkle right-[24%] top-[38%] [animation-delay:500ms]"></span>
-            <span class="sparkle left-[38%] bottom-[17%] [animation-delay:900ms]"></span>
-            <span class="sparkle right-[12%] bottom-[30%] [animation-delay:1200ms]"></span>
-          </div>
+            <p class="opening-title font-script text-5xl sm:text-6xl" aria-hidden="true">Mis XV años</p>
 
-          <p class="opening-title font-script text-5xl sm:text-6xl" aria-hidden="true">Mis XV años</p>
-
-          <!-- Contenedor de la foto -->
-          <div class="invitation-card relative z-10 isolate mx-auto overflow-hidden shadow-2xl w-[min(320px,calc(100vw-2rem))] sm:w-[min(360px,calc(100vw-2rem))] lg:w-full aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0" 
-               id="hero-photo" 
-               style="opacity: 0; transform: scale(0.8); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>'); mask-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>'); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;">
-            <img src="1.jpeg" alt="Fotografía de la quinceañera" class="absolute inset-0 h-full w-full object-cover object-[center_40%]">
+            <!-- Contenedor de la foto -->
+            <div class="invitation-card relative z-10 isolate mx-auto overflow-hidden shadow-2xl w-[min(320px,calc(100vw-2rem))] sm:w-[min(360px,calc(100vw-2rem))] lg:w-full aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0" 
+                 id="hero-photo" 
+                 style="opacity: 0; transform: scale(0.8); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>'); mask-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>'); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;">
+              <img src="1.jpeg" alt="Fotografía de la quinceañera" class="absolute inset-0 h-full w-full object-cover object-[center_40%]">
+            </div>
           </div>
         </div>
       </section>
 
       <!-- INFO CON SCROLL POR SECCIONES -->
-      <div class="w-full lg:w-[60%] lg:py-16 flex flex-col items-center">
+      <div class="w-full lg:w-[60%] lg:py-16 flex flex-col items-center relative z-10">
 
         <!-- SECCIÓN 1: TÍTULO -->
         <section id="seccion-titulo" class="flex min-h-0 md:min-h-[75svh] w-full flex-col items-center justify-center px-4 py-12 md:py-16 text-center">
@@ -326,24 +330,35 @@
     const heroPhoto = document.querySelector('#hero-photo');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
+    // Variables de suavizado
     let currentProgress = 0; 
     let targetProgress = 0;  
-    const smoothFactor = 0.05; // Ajusta qué tan suave/lento es el efecto
+    const smoothFactor = 0.05; 
+
+    // === NUEVA LÓGICA DE STICKY Y APERTURA ÚNICA ===
+    let hasOpened = false; // Bandera para que no se vuelva a cerrar
+    const heroWrapper = document.querySelector('#hero-sticky-wrapper'); // Contenedor sticky
+    const initialHeight = window.innerHeight; // Referencia de la pantalla
 
     function animate() {
       const scrollY = window.scrollY || window.pageYOffset;
       const viewportH = window.innerHeight;
       const isDesktop = window.innerWidth >= 1024;
 
-      /* --- 1. EFECTO DE APERTURA (CORAZÓN A MARCO) PARA TODOS --- */
+      /* --- 1. CONTROL DE STICKY Y APERTURA --- */
       
-      // Calculamos el progreso basado en el scroll (1.5 pantallas para completar)
-      targetProgress = Math.min(scrollY / (viewportH * 1.5), 1);
-      
+      // Calculamos el progreso. Requiere 1.5 pantallas de scroll.
+      // Si ya se abrió, forzamos el progreso a 1.
+      if (!hasOpened) {
+        targetProgress = Math.min(scrollY / (viewportH * 1.5), 1);
+      } else {
+        targetProgress = 1;
+      }
+
       // Suavizado
       currentProgress += (targetProgress - currentProgress) * smoothFactor;
 
-      // FASE 1: Las flores se abren (0 al 50% del progreso)
+      // FASE 1: Flores se abren (0 al 50%)
       let flowerProgress = Math.min(currentProgress / 0.5, 1);
       flowerProgress = 1 - Math.pow(1 - flowerProgress, 3); 
 
@@ -361,38 +376,35 @@
         flower.style.opacity = 1 - (flowerProgress * 0.3);
       });
 
-      // FASE 2: La foto aparece y la máscara se expande (50 al 100% del progreso)
+      // FASE 2: Foto aparece y máscara se expande (50 al 100%)
       if (heroPhoto) {
         let photoProgress = Math.max(0, (currentProgress - 0.5) / 0.5);
         photoProgress = 1 - Math.pow(1 - photoProgress, 3); 
 
-        // Opacidad: de 0 a 1
         heroPhoto.style.opacity = photoProgress;
-
-        // Escala: de 0.8 a 1 (zoom suave)
         heroPhoto.style.transform = `scale(${0.8 + (0.2 * photoProgress)})`;
 
-        // LA MAGIA: Expandimos la máscara del corazón usando el tamaño de la máscara.
-        // Al inicio es 100% 100% (ocupa todo, pero el SVG del corazón tiene su forma).
-        // Hacemos un 'zoom' de la máscara para que el corazón se haga más grande y salga de la pantalla.
-        const maskScale = 1 + (photoProgress * 3); // Llega a 4x, cubriendo todo el rectángulo
-        heroPhoto.style.webkitMaskSize = `${maskScale * 100}% ${maskScale * 100}%`;
-        heroPhoto.style.maskSize = `${maskScale * 100}% ${maskScale * 100}%`;
-
-        // Cuando termina, le quitamos la máscara para que se vea el marco original (redondeado superior)
+        // Máscara
         if (photoProgress > 0.95) {
             heroPhoto.style.webkitMaskImage = 'none';
             heroPhoto.style.maskImage = 'none';
-            heroPhoto.style.borderRadius = '50% 50% 0 0 / 30% 30% 0 0'; // Tu marco original
+            heroPhoto.style.borderRadius = '50% 50% 0 0 / 30% 30% 0 0';
+            
+            // Si llegó al 95%, marcamos como abierto
+            if (!hasOpened && photoProgress >= 0.99) {
+                hasOpened = true;
+                // Una vez abierto, quitamos el sticky del wrapper para que fluya normal
+                if (heroWrapper) heroWrapper.style.position = 'relative';
+            }
         } else {
-            // Restauramos la máscara del corazón (por si acaso subimos el scroll)
+            // Restauramos la máscara si no ha terminado
             heroPhoto.style.webkitMaskImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>')";
             heroPhoto.style.maskImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>')";
-            heroPhoto.style.borderRadius = '0'; // Quitamos el redondeo para que el corazón sea limpio
+            heroPhoto.style.borderRadius = '0';
         }
       }
 
-      /* --- 2. EFECTO PARALLAX / DESVANECIMIENTO DE TEXTOS (SOLO DESKTOP) --- */
+      /* --- 2. PARALLAX TEXTOS (SOLO DESKTOP) --- */
       parallaxTexts.forEach((el) => {
         if (!isDesktop) {
           el.style.transform = 'none';
@@ -423,7 +435,6 @@
         el.style.filter = `blur(${blur.toFixed(2)}px)`;
       });
 
-      // Bucle continuo
       requestAnimationFrame(animate);
     }
 
