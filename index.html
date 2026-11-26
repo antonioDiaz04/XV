@@ -48,6 +48,12 @@
     html { scroll-behavior: smooth; }
     body { background: #ffffff; }
 
+    /* ===== BLOQUEO DE SCROLL MIENTRAS SE ABRE ===== */
+    body.scroll-locked {
+      overflow: hidden !important;
+      height: 100vh !important;
+    }
+
     /* ===== PARALLAX (SOLO TEXTOS) ===== */
     .parallax-text { will-change: transform, opacity, filter; transition: transform 120ms linear, opacity 120ms linear, filter 120ms linear; }
 
@@ -63,7 +69,7 @@
     .opening-title {
       position: absolute; left: 50%; top: 50%; z-index: 30; width: max-content; max-width: calc(100vw - 3rem);
       translate: -50% -50%; 
-      color: #e75480; /* Rosa fuerte */
+      color: #e75480;
       text-align: center; 
       white-space: nowrap;
       text-shadow: 
@@ -107,6 +113,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
+      body.scroll-locked { overflow: auto !important; height: auto !important; }
       .flower-flight, .flower-art, .sparkle, .opening-title, .luminous-text-dark > *, .luminous-text-rosa > *, .click-sparkle, .click-sparkle::before, .click-sparkle::after, .click-sparkle-dot, .flower-divider img { animation: none; }
       .opening-title { display: none; }
       .click-sparkle, .click-sparkle-dot { display: none; }
@@ -115,15 +122,13 @@
   </style>
 </head>
 
-<body class="min-h-screen overflow-x-hidden font-elegante bg-white">
+<body class="min-h-screen overflow-x-hidden font-elegante bg-white scroll-locked">
 
   <main class="mx-auto flex w-full max-w-5xl flex-col items-center px-6 sm:px-8 lg:px-12 xl:px-16">
 
     <div class="flex w-full flex-col items-center lg:flex-row lg:items-start lg:gap-12 xl:gap-20 lg:py-12">
 
       <!-- FOTO (CON EFECTO DE CORAZÓN A MARCO) -->
-      <!-- En móvil usamos sticky para que se quede fija mientras se abre -->
-      <!-- Le damos un height extra en móvil para que dé tiempo a que la animación termine -->
       <section aria-label="Fotografía de la quinceañera" class="w-full py-10 lg:sticky lg:top-16 lg:w-[40%] lg:self-start lg:py-16 relative z-30">
         <div id="hero-sticky-wrapper" class="relative w-full lg:sticky lg:top-16">
           <div class="relative inline-block w-full">
@@ -330,35 +335,46 @@
     const heroPhoto = document.querySelector('#hero-photo');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    // Variables de suavizado
+    // Variables de animación
     let currentProgress = 0; 
     let targetProgress = 0;  
-    const smoothFactor = 0.05; 
+    const smoothFactor = 0.04; // Un poco más lento para que se aprecie
 
-    // === NUEVA LÓGICA DE STICKY Y APERTURA ÚNICA ===
-    let hasOpened = false; // Bandera para que no se vuelva a cerrar
-    const heroWrapper = document.querySelector('#hero-sticky-wrapper'); // Contenedor sticky
-    const initialHeight = window.innerHeight; // Referencia de la pantalla
+    // Variables de bloqueo
+    let hasOpened = false; 
+    let isLocked = true; // Estado inicial: bloqueado
+    
+    // Tiempo de apertura automática (en milisegundos)
+    // Como el scroll está bloqueado, la animación avanza sola por tiempo
+    const autoOpenDuration = 4000; // 4 segundos para abrirse
+    const startTime = performance.now();
 
     function animate() {
-      const scrollY = window.scrollY || window.pageYOffset;
-      const viewportH = window.innerHeight;
-      const isDesktop = window.innerWidth >= 1024;
+      const now = performance.now();
+      const elapsed = now - startTime;
 
-      /* --- 1. CONTROL DE STICKY Y APERTURA --- */
+      /* --- 1. LÓGICA DE APERTURA AUTOMÁTICA Y BLOQUEO --- */
       
-      // Calculamos el progreso. Requiere 1.5 pantallas de scroll.
-      // Si ya se abrió, forzamos el progreso a 1.
       if (!hasOpened) {
-        targetProgress = Math.min(scrollY / (viewportH * 1.5), 1);
+        // Mientras no se haya abierto, calculamos el progreso basado en el TIEMPO
+        // No en el scroll, porque el scroll está bloqueado.
+        targetProgress = Math.min(elapsed / autoOpenDuration, 1);
+        
+        // Si llegamos al 100%, desbloqueamos el scroll
+        if (targetProgress >= 1) {
+          hasOpened = true;
+          isLocked = false;
+          document.body.classList.remove('scroll-locked');
+        }
       } else {
+        // Si ya se abrió, el progreso se queda en 1 (abierto permanentemente)
         targetProgress = 1;
       }
 
-      // Suavizado
+      // Suavizado para que no se vea brusco
       currentProgress += (targetProgress - currentProgress) * smoothFactor;
 
-      // FASE 1: Flores se abren (0 al 50%)
+      // FASE 1: Flores se abren (0 al 50% del progreso)
       let flowerProgress = Math.min(currentProgress / 0.5, 1);
       flowerProgress = 1 - Math.pow(1 - flowerProgress, 3); 
 
@@ -376,7 +392,7 @@
         flower.style.opacity = 1 - (flowerProgress * 0.3);
       });
 
-      // FASE 2: Foto aparece y máscara se expande (50 al 100%)
+      // FASE 2: Foto aparece y máscara se expande (50 al 100% del progreso)
       if (heroPhoto) {
         let photoProgress = Math.max(0, (currentProgress - 0.5) / 0.5);
         photoProgress = 1 - Math.pow(1 - photoProgress, 3); 
@@ -389,15 +405,7 @@
             heroPhoto.style.webkitMaskImage = 'none';
             heroPhoto.style.maskImage = 'none';
             heroPhoto.style.borderRadius = '50% 50% 0 0 / 30% 30% 0 0';
-            
-            // Si llegó al 95%, marcamos como abierto
-            if (!hasOpened && photoProgress >= 0.99) {
-                hasOpened = true;
-                // Una vez abierto, quitamos el sticky del wrapper para que fluya normal
-                if (heroWrapper) heroWrapper.style.position = 'relative';
-            }
         } else {
-            // Restauramos la máscara si no ha terminado
             heroPhoto.style.webkitMaskImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>')";
             heroPhoto.style.maskImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>')";
             heroPhoto.style.borderRadius = '0';
@@ -405,41 +413,52 @@
       }
 
       /* --- 2. PARALLAX TEXTOS (SOLO DESKTOP) --- */
-      parallaxTexts.forEach((el) => {
-        if (!isDesktop) {
-          el.style.transform = 'none';
-          el.style.opacity = '1';
-          el.style.filter = 'none';
-          return;
-        }
+      // Solo aplicamos parallax de texto si ya se desbloqueó el scroll
+      if (!isLocked) {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const viewportH = window.innerHeight;
+        const isDesktop = window.innerWidth >= 1024;
 
-        const rect = el.getBoundingClientRect();
-        const centerY = rect.top + rect.height / 2;
-        const distanceFromCenter = Math.abs(centerY - viewportH / 2);
-        
-        const maxDistance = viewportH * 0.65; 
-        let progress = Math.min(distanceFromCenter / maxDistance, 1);
-        progress = Math.pow(progress, 1.2);
+        parallaxTexts.forEach((el) => {
+          if (!isDesktop) {
+            el.style.transform = 'none';
+            el.style.opacity = '1';
+            el.style.filter = 'none';
+            return;
+          }
 
-        const fadeStrength = parseFloat(el.dataset.fade || '1');
-        const minOpacity = 0.05 + (1 - fadeStrength) * 0.25;
-        const opacity = 1 - progress * (1 - minOpacity);
+          const rect = el.getBoundingClientRect();
+          const centerY = rect.top + rect.height / 2;
+          const distanceFromCenter = Math.abs(centerY - viewportH / 2);
+          
+          const maxDistance = viewportH * 0.65; 
+          let progress = Math.min(distanceFromCenter / maxDistance, 1);
+          progress = Math.pow(progress, 1.2);
 
-        const speed = parseFloat(el.dataset.speed || '0.05');
-        const offset = (scrollY - (el.offsetTop - viewportH / 2)) * speed * 0.15;
+          const fadeStrength = parseFloat(el.dataset.fade || '1');
+          const minOpacity = 0.05 + (1 - fadeStrength) * 0.25;
+          const opacity = 1 - progress * (1 - minOpacity);
 
-        const blur = progress * 4 * fadeStrength;
+          const speed = parseFloat(el.dataset.speed || '0.05');
+          const offset = (scrollY - (el.offsetTop - viewportH / 2)) * speed * 0.15;
 
-        el.style.transform = `translate3d(0, ${offset}px, 0)`;
-        el.style.opacity = opacity.toFixed(3);
-        el.style.filter = `blur(${blur.toFixed(2)}px)`;
-      });
+          const blur = progress * 4 * fadeStrength;
+
+          el.style.transform = `translate3d(0, ${offset}px, 0)`;
+          el.style.opacity = opacity.toFixed(3);
+          el.style.filter = `blur(${blur.toFixed(2)}px)`;
+        });
+      }
 
       requestAnimationFrame(animate);
     }
 
     if (!reduceMotion) {
+      // Iniciamos la animación
       requestAnimationFrame(animate);
+    } else {
+      // Si el usuario prefiere movimiento reducido, desbloqueamos inmediatamente
+      document.body.classList.remove('scroll-locked');
     }
 
     /* ===== INSTALACIÓN PWA ===== */
