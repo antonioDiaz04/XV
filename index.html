@@ -54,6 +54,47 @@
       height: 100vh !important;
     }
 
+    /* ===== FLORES FIJAS EN LOS BORDES ===== */
+    .floral-frame {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 150px; /* Ancho en PC */
+      background-image: url('descarga-removebg-preview.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      pointer-events: none; /* Para que no bloqueen los clics */
+      z-index: 5; /* Por debajo del contenido principal pero encima del fondo */
+      opacity: 0.85; /* Un poco de transparencia para que no sature */
+    }
+
+    .floral-frame-left {
+      left: 0;
+      transform: scaleX(1); /* Imagen original */
+    }
+
+    .floral-frame-right {
+      right: 0;
+      transform: scaleX(-1); /* Volteada horizontalmente para que sea simétrica */
+    }
+
+    /* Ajuste para móvil: las flores son más estrechas para dejar leer el texto */
+    @media (max-width: 1023px) {
+      .floral-frame {
+        width: 60px;
+        opacity: 0.6;
+      }
+      .floral-frame-left {
+        background-position: left center;
+        background-size: auto 100%;
+      }
+      .floral-frame-right {
+        background-position: right center;
+        background-size: auto 100%;
+      }
+    }
+
     /* ===== PARALLAX (SOLO TEXTOS) ===== */
     .parallax-text { will-change: transform, opacity, filter; transition: transform 120ms linear, opacity 120ms linear, filter 120ms linear; }
 
@@ -124,7 +165,13 @@
 
 <body class="min-h-screen overflow-x-hidden font-elegante bg-white scroll-locked">
 
-  <main class="mx-auto flex w-full max-w-5xl flex-col items-center px-6 sm:px-8 lg:px-12 xl:px-16">
+  <!-- FLORES FIJAS EN LOS BORDES (IZQUIERDA Y DERECHA) -->
+  <div class="floral-frame floral-frame-left" aria-hidden="true"></div>
+  <div class="floral-frame floral-frame-right" aria-hidden="true"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <!-- Le damos un z-index mayor que las flores para que esté por encima de ellas -->
+  <main class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-6 sm:px-8 lg:px-12 xl:px-16">
 
     <div class="flex w-full flex-col items-center lg:flex-row lg:items-start lg:gap-12 xl:gap-20 lg:py-12">
 
@@ -338,14 +385,13 @@
     // Variables de animación
     let currentProgress = 0; 
     let targetProgress = 0;  
-    const smoothFactor = 0.04; // Un poco más lento para que se aprecie
+    const smoothFactor = 0.04; 
 
     // Variables de bloqueo
     let hasOpened = false; 
-    let isLocked = true; // Estado inicial: bloqueado
+    let isLocked = true; 
     
     // Tiempo de apertura automática (en milisegundos)
-    // Como el scroll está bloqueado, la animación avanza sola por tiempo
     const autoOpenDuration = 4000; // 4 segundos para abrirse
     const startTime = performance.now();
 
@@ -356,22 +402,17 @@
       /* --- 1. LÓGICA DE APERTURA AUTOMÁTICA Y BLOQUEO --- */
       
       if (!hasOpened) {
-        // Mientras no se haya abierto, calculamos el progreso basado en el TIEMPO
-        // No en el scroll, porque el scroll está bloqueado.
         targetProgress = Math.min(elapsed / autoOpenDuration, 1);
         
-        // Si llegamos al 100%, desbloqueamos el scroll
         if (targetProgress >= 1) {
           hasOpened = true;
           isLocked = false;
           document.body.classList.remove('scroll-locked');
         }
       } else {
-        // Si ya se abrió, el progreso se queda en 1 (abierto permanentemente)
         targetProgress = 1;
       }
 
-      // Suavizado para que no se vea brusco
       currentProgress += (targetProgress - currentProgress) * smoothFactor;
 
       // FASE 1: Flores se abren (0 al 50% del progreso)
