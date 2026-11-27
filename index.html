@@ -59,39 +59,45 @@
       position: fixed;
       top: 0;
       bottom: 0;
-      width: 150px; /* Ancho en PC */
+      width: 240px; /* Mucho más ancho en PC */
       background-image: url('descarga-removebg-preview.png');
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover;
-      pointer-events: none; /* Para que no bloqueen los clics */
-      z-index: 5; /* Por debajo del contenido principal pero encima del fondo */
-      opacity: 0.85; /* Un poco de transparencia para que no sature */
+      background-size: cover; /* Para que cubra toda la altura */
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0.95; /* Casi totalmente visibles */
     }
 
     .floral-frame-left {
       left: 0;
-      transform: scaleX(1); /* Imagen original */
+      transform: scaleX(1);
     }
 
     .floral-frame-right {
       right: 0;
-      transform: scaleX(-1); /* Volteada horizontalmente para que sea simétrica */
+      transform: scaleX(-1); /* Volteada para simetría */
     }
 
-    /* Ajuste para móvil: las flores son más estrechas para dejar leer el texto */
+    /* Ajuste para móvil: más anchas pero con degradado para no tapar texto */
     @media (max-width: 1023px) {
       .floral-frame {
-        width: 60px;
-        opacity: 0.6;
+        width: 140px; /* Más anchas en móvil */
+        opacity: 0.9;
+        /* Degradado para que se difuminen hacia el centro */
+        -webkit-mask-image: linear-gradient(to right, black 30%, transparent 100%);
+        mask-image: linear-gradient(to right, black 30%, transparent 100%);
       }
       .floral-frame-left {
         background-position: left center;
-        background-size: auto 100%;
+        background-size: auto 100%; /* Ajusta la altura */
       }
       .floral-frame-right {
         background-position: right center;
         background-size: auto 100%;
+        /* Invertimos el degradado para el lado derecho */
+        -webkit-mask-image: linear-gradient(to left, black 30%, transparent 100%);
+        mask-image: linear-gradient(to left, black 30%, transparent 100%);
       }
     }
 
@@ -165,12 +171,11 @@
 
 <body class="min-h-screen overflow-x-hidden font-elegante bg-white scroll-locked">
 
-  <!-- FLORES FIJAS EN LOS BORDES (IZQUIERDA Y DERECHA) -->
+  <!-- FLORES FIJAS EN LOS BORDES -->
   <div class="floral-frame floral-frame-left" aria-hidden="true"></div>
   <div class="floral-frame floral-frame-right" aria-hidden="true"></div>
 
   <!-- CONTENIDO PRINCIPAL -->
-  <!-- Le damos un z-index mayor que las flores para que esté por encima de ellas -->
   <main class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-6 sm:px-8 lg:px-12 xl:px-16">
 
     <div class="flex w-full flex-col items-center lg:flex-row lg:items-start lg:gap-12 xl:gap-20 lg:py-12">
