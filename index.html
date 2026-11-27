@@ -59,14 +59,14 @@
       position: fixed;
       top: 0;
       bottom: 0;
-      width: 240px; /* Mucho más ancho en PC */
+      width: 180px; /* Ancho base */
       background-image: url('descarga-removebg-preview.png');
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover; /* Para que cubra toda la altura */
+      background-size: cover;
       pointer-events: none;
       z-index: 5;
-      opacity: 0.95; /* Casi totalmente visibles */
+      opacity: 0.95;
     }
 
     .floral-frame-left {
@@ -76,28 +76,28 @@
 
     .floral-frame-right {
       right: 0;
-      transform: scaleX(-1); /* Volteada para simetría */
+      transform: scaleX(-1);
     }
 
-    /* Ajuste para móvil: más anchas pero con degradado para no tapar texto */
+    /* Ajuste para móvil: ambos lados visibles y suaves */
     @media (max-width: 1023px) {
       .floral-frame {
-        width: 140px; /* Más anchas en móvil */
+        width: 120px; /* Más anchas en móvil */
         opacity: 0.9;
         /* Degradado para que se difuminen hacia el centro */
-        -webkit-mask-image: linear-gradient(to right, black 30%, transparent 100%);
-        mask-image: linear-gradient(to right, black 30%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, black 40%, transparent 100%);
+        mask-image: linear-gradient(to right, black 40%, transparent 100%);
       }
       .floral-frame-left {
         background-position: left center;
-        background-size: auto 100%; /* Ajusta la altura */
+        background-size: auto 100%;
       }
       .floral-frame-right {
         background-position: right center;
         background-size: auto 100%;
         /* Invertimos el degradado para el lado derecho */
-        -webkit-mask-image: linear-gradient(to left, black 30%, transparent 100%);
-        mask-image: linear-gradient(to left, black 30%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to left, black 40%, transparent 100%);
+        mask-image: linear-gradient(to left, black 40%, transparent 100%);
       }
     }
 
@@ -128,7 +128,14 @@
       animation: title-appear 3500ms ease-in-out 700ms both;
     }
     
-    .invitation-card { will-change: transform, opacity, clip-path; }
+    /* ===== NUEVO MARCO CREATIVO PARA LA FOTO ===== */
+    .invitation-card { 
+      will-change: transform, opacity, mask-image, border-radius; 
+      /* Borde creativo: esquinas asimétricas y sombra suave */
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; 
+      box-shadow: 0 20px 40px rgba(231, 84, 128, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.5);
+      transition: border-radius 0.3s ease;
+    }
     
     .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 9999px; background: #f8c8dc; box-shadow: 0 0 8px 3px rgb(231 84 128 / 65%); animation: sparkle-glow 2200ms ease-in-out infinite alternate; }
     @keyframes sparkle-glow { from { opacity: .35; scale: .7; } to { opacity: .9; scale: 1.15; } }
@@ -180,7 +187,7 @@
 
     <div class="flex w-full flex-col items-center lg:flex-row lg:items-start lg:gap-12 xl:gap-20 lg:py-12">
 
-      <!-- FOTO (CON EFECTO DE CORAZÓN A MARCO) -->
+      <!-- FOTO (CON EFECTO DE CORAZÓN A MARCO CREATIVO) -->
       <section aria-label="Fotografía de la quinceañera" class="w-full py-10 lg:sticky lg:top-16 lg:w-[40%] lg:self-start lg:py-16 relative z-30">
         <div id="hero-sticky-wrapper" class="relative w-full lg:sticky lg:top-16">
           <div class="relative inline-block w-full">
@@ -217,8 +224,8 @@
 
             <p class="opening-title font-script text-5xl sm:text-6xl" aria-hidden="true">Mis XV años</p>
 
-            <!-- Contenedor de la foto -->
-            <div class="invitation-card relative z-10 isolate mx-auto overflow-hidden shadow-2xl w-[min(320px,calc(100vw-2rem))] sm:w-[min(360px,calc(100vw-2rem))] lg:w-full aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0" 
+            <!-- Contenedor de la foto con marco creativo -->
+            <div class="invitation-card relative z-10 isolate mx-auto overflow-hidden w-[min(320px,calc(100vw-2rem))] sm:w-[min(360px,calc(100vw-2rem))] lg:w-full aspect-[3/4] min-h-[420px] sm:aspect-[4/5] sm:min-h-0" 
                  id="hero-photo" 
                  style="opacity: 0; transform: scale(0.8); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>'); mask-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>'); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;">
               <img src="1.jpeg" alt="Fotografía de la quinceañera" class="absolute inset-0 h-full w-full object-cover object-[center_40%]">
@@ -450,7 +457,8 @@
         if (photoProgress > 0.95) {
             heroPhoto.style.webkitMaskImage = 'none';
             heroPhoto.style.maskImage = 'none';
-            heroPhoto.style.borderRadius = '50% 50% 0 0 / 30% 30% 0 0';
+            // Aquí aplicamos el nuevo border-radius creativo
+            heroPhoto.style.borderRadius = '30% 70% 70% 30% / 30% 30% 70% 70%';
         } else {
             heroPhoto.style.webkitMaskImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>')";
             heroPhoto.style.maskImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 50,25 C 50,25 35,-5 10,15 C -15,35 15,75 50,95 C 85,75 115,35 90,15 C 65,-5 50,25 50,25 Z\" fill=\"black\" /></svg>')";
